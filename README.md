@@ -5,3 +5,7 @@ To reflect a disciplined close process, controls and data validation are include
 
 On the investment side, a simplified reinvestment strategy is produced using policy rules (liquidity reserve, maximum below-investment-grade exposure, and a duration target). The strategy outputs a reinvestment plan and summary in CSV and Excel formats. The “stand-out” reconciliation component is implemented through attribution, breaking surplus movement into rate impact, spread impact, a carry proxy, and residual so the core close question can be answered: “Why did surplus change?”
 
+## Screenshots
+![KPI Dashboard](docs/screenshots/kpi_dashboard.png)
+![Attribution](docs/screenshots/attribution_sheet.png)
+![Close Pack Folder](docs/screenshots/folder_structure.png)
