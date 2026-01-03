@@ -5,6 +5,44 @@ Built to mirror operations + reporting workflows where traceability and repeatab
 
 ---
 
+## AXIS alignment (honest)
+
+This project does **not** run or configure GGY AXIS. It is an **AXIS-like quarter-close ALM mini-system** that mirrors the workflow *around* AXIS:
+
+- **Asset inventory extract** → AXIS asset file analog  
+- **Economic assumption inputs** (yield curves / spreads) → AXIS assumption input analog  
+- **Controls + traceability** (DQ gates, manifests, change tickets) → disciplined controls environment expectations  
+- **Asset-only UAT evidence** → aligns to “execute asset-only user testing” language
+
+See: `AXIS_MAPPING.md` and `/user_testing/`.
+
+---
+
+## Where to look (fast)
+
+- AXIS mapping: `AXIS_MAPPING.md`
+- Asset-only UAT: `user_testing/test_cases.xlsx` + `user_testing/uat_summary.md`
+- Core notebook: `notebooks/quarter_close_alm.ipynb`
+- Controls evidence (close pack): `close_pack/controls/`
+- Outputs: `data/outputs/`
+
+---
+
+## Notebook → Mini “System” (what makes this production-like)
+
+This is not just an analysis notebook. The notebook is structured as a repeatable **mini-system** that resembles how quarter-close ALM reporting support is executed:
+
+- **Standardized inputs/outputs:** predictable folder paths and naming conventions for quarter-close artifacts  
+- **Config-driven runs:** parameters (paths, run settings, and assumptions selection) are set once and reused consistently  
+- **Deterministic execution:** running top-to-bottom reproduces the same outputs given the same inputs  
+- **Controls-first workflow:** every run produces an audit trail (manifests, DQ gates, and change tickets)  
+- **Run packaging mindset:** outputs + controls evidence are organized as a “close pack” to support review and sign-off
+
+Explainable to auditors and usable by operations: every run leaves behind reproducible evidence.
+
+
+---
+
 ## Quick Start (Google Colab)
 
 **Option A — Run in Colab (recommended):**
@@ -16,8 +54,8 @@ Built to mirror operations + reporting workflows where traceability and repeatab
 - KPI outputs in `data/outputs/` (or your outputs folder)
 - Controls evidence in `close_pack/controls/`
 
-> If you want, add a Colab badge here:
-> [Open In Colab]([PASTE_YOUR_COLAB_LINK_HERE](https://colab.research.google.com/drive/11yJ9f0l_RgMHM2K0KXTIVoVwAXaqeDVn))
+
+> [Open In Colab](https://colab.research.google.com/drive/11yJ9f0l_RgMHM2K0KXTIVoVwAXaqeDVn)
 
 ---
 
@@ -43,7 +81,7 @@ Each run produces immutable controls evidence for auditability:
 - **Quarterly Change Ticket:** `close_pack/controls/change_ticket_<QUARTER>.md`  
   Captures what changed (curves/spreads/policy), why, expected impact, testing performed, and approvals (simulated OK).
 
-✅ **Result:** You can reproduce any run, verify file integrity, and show a clear control framework—exactly what “disciplined controls environment” implies.
+You can reproduce any run, verify file integrity, and show a clear control framework—exactly what “disciplined controls environment” implies.
 
 ---
 
@@ -87,9 +125,13 @@ quarter_close_alm/
       dq_gate_report.md
       change_ticket_<QUARTER>.md
     results/
+  user_testing/
+    test_cases.xlsx
+    uat_summary.md
   src/
     (optional python modules)
   README.md
+
 
 
 
