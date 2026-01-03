@@ -1,68 +1,96 @@
-## Quarter-Close-alm-mini-system
-Built a mini system that simulates an insurance quarter-close ALM workflow:
-- Ingests asset holdings + economic assumptions (yield curve + credit spreads)
-- Generates AXIS-like input files
-- Runs base vs. scenario valuation (MVP proxy)
-- Produces a KPI dashboard, exceptions, and surplus attribution
-- Packages everything into a quarter-close deliverable pack with controls evidence
+# Quarter Close ALM Mini System (IFRS-style Controls + KPI Outputs)
+
+A mini quarter-close ALM pipeline that produces model-ready outputs and KPIs with an **auditable, disciplined controls environment** (run manifests, data-quality gates, and quarterly change tickets).  
+Built to mirror operations + reporting workflows where traceability and repeatability matter.
 
 ---
 
-## Business Problem
-Quarter-close reporting (IFRS / PBR / ALM) depends on runs that are:
-- repeatable (same inputs → same outputs)
-- controlled (validated data, documented assumptions)
-- explainable (“what changed and why?”)
-This project demonstrates that discipline end-to-end: controlled inputs → run → reconciliation → attribution → close pack.
+## Quick Start (Google Colab)
+
+**Option A — Run in Colab (recommended):**
+1. Open the notebook: `notebooks/quarter_close_alm.ipynb`
+2. Update the project path to your Drive folder (example: `quarter_close_alm`)
+3. Run all cells top-to-bottom
+
+**What you’ll get:**
+- KPI outputs in `data/outputs/` (or your outputs folder)
+- Controls evidence in `close_pack/controls/`
+
+> If you want, add a Colab badge here:
+> [Open In Colab]([PASTE_YOUR_COLAB_LINK_HERE](https://colab.research.google.com/drive/11yJ9f0l_RgMHM2K0KXTIVoVwAXaqeDVn))
 
 ---
 
-## Inputs
-Holdings (asset inventory): synthetic but intentionally “messy” (real-world style issues)
+## Disciplined Controls Environment (Audit Trail)
 
-Economic assumptions:
-- Yield curve (tenor → rate)
-- Credit spreads (rating → spread bps)
+Each run produces immutable controls evidence for auditability:
 
-Scenario shocks (from config): rate shock bps + spread shock bps
-Reinvestment policy rules: liquidity reserve, max below-IG, duration target
+- **Run Manifest (JSON):** `close_pack/controls/run_manifest.json`  
+  Includes `run_id`, `timestamp_utc`, `git_commit` (if available), `config_hash`, and **SHA256 checksums** for all input/output files.
 
+- **Run Manifest (XLSX):** `close_pack/controls/run_manifest.xlsx`  
+  Human-readable run summary (meta + config + file checksums).
+
+- **Data Quality Gate Report (one page):** `close_pack/controls/dq_gate_report.xlsx`  
+  “Controls Summary” includes:
+  - required columns PASS/FAIL  
+  - null counts  
+  - duplicate checks  
+  - out-of-range checks  
+  - exceptions count  
+  - sign-off field
+
+- **Quarterly Change Ticket:** `close_pack/controls/change_ticket_<QUARTER>.md`  
+  Captures what changed (curves/spreads/policy), why, expected impact, testing performed, and approvals (simulated OK).
+
+✅ **Result:** You can reproduce any run, verify file integrity, and show a clear control framework—exactly what “disciplined controls environment” implies.
 
 ---
 
-## Method Overview (Quarter-Close Pipeline)
+## Outputs & KPIs (What this project produces)
 
-1. Setup + MVP Run
-- Build AXIS-like input files
-- Run base + scenario valuation (proxy)
-- Generate KPI dashboard + reconciliation folder outputs
-  
-2. Controls + Data Validation
-- Required-column checks
-- Numeric sanity checks
-- Exception logging (what’s wrong + how to fix)
+Typical outputs include:
+- **Asset inventory / roll-forward extracts**
+- **Economic assumptions snapshots** (curves/spreads)
+- **Reinvestment strategy outputs** (if applicable)
+- **Quarter-close KPI tables** (e.g., Assets, Surplus, attribution drivers)
 
-3. Assumption Governance (Quarterly Updates)
-- Version assumptions by quarter (prior vs current)
-- Diff report in bps by tenor (curve) + rating (spreads)
-- Reinvestment Strategy (Investment Inputs)
+Primary output location:
+- `data/outputs/` 
 
-4. Apply policy rules
-- Generate allocation plan by sector/rating/duration band
-- Output investment inputs (CSV + Excel)
-- Attribution + Reconciliation (the stand-out)
+---
 
-5. Explain surplus movement via:
-- rate impact
-- spread impact
-- carry proxy
-- residual (ties-out)
-Stakeholder-friendly attribution table + dashboard sheet
+## How the Pipeline Works (High-level)
 
-6. Close Pack (Recruiter-ready bundle)
-- Executive summary (1 page)
-- Controls evidence checklist + run manifest
-- Pack outputs into a shareable folder/ZIP
+1. **Load inputs** (positions, assumptions, mappings)
+2. **Validate inputs** (required columns + data quality gates)
+3. **Transform / build model-ready tables**
+4. **Compute KPIs / summaries**
+5. **Write outputs** (CSV/XLSX) + **generate controls evidence** in `close_pack/controls/`
+
+---
+
+## Repository Structure
+
+```text
+quarter_close_alm/
+  notebooks/
+    quarter_close_alm.ipynb
+  data/
+    inputs/
+    outputs/
+  close_pack/
+    controls/
+      run_manifest.json
+      run_manifest.xlsx
+      dq_gate_report.xlsx
+      dq_gate_report.md
+      change_ticket_<QUARTER>.md
+    results/
+  src/
+    (optional python modules)
+  README.md
+
 
 
 ## Screenshots
