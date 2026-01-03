@@ -11,7 +11,7 @@ Designed to mirror insurance ALM operations where **traceability, repeatability,
 
 ---
 
-## AXIS Alignment (Honest)
+## AXIS Alignment
 
 This project does **not** run or configure GGY AXIS. Instead, it mirrors the quarter-close workflow *around* AXIS to demonstrate operational readiness:
 
@@ -26,7 +26,7 @@ See:
 
 ---
 
-## Where to Look (Fast)
+## Where to Look
 
 - **AXIS mapping:** `AXIS_MAPPING.md`  
 - **Asset-only UAT:** `user_testing/test_cases.xlsx` + `user_testing/uat_summary.md`  
@@ -36,7 +36,7 @@ See:
 
 ---
 
-## Notebook → Mini System (Why this is production-like)
+## Notebook → Mini System 
 
 This is not a one-off analysis. The workflow is structured like a repeatable quarter-close run:
 
@@ -104,7 +104,7 @@ Primary output location:
 
 ---
 
-## Pipeline (High-Level)
+## Pipeline 
 
 1. **Load inputs** (positions, assumptions, mappings)  
 2. **Validate inputs** (required columns + DQ gates)  
